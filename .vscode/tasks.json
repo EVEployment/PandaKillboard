@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "watch",
+			"label": "Laravel Mix: Watch",
+			"detail": "npm run development -- --watch",
+			"problemMatcher": []
+		},
+		{
+			"type": "npm",
+			"script": "serve",
+			"label": "Laravel: Serve",
+			"detail": "php artisan serve",
+			"problemMatcher": []
+		}
+	]
+}

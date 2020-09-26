@@ -19,4 +19,12 @@ class SingleKillmail extends Controller
             'killmail' => $killmail,
         ]);
     }
+
+    public function getAttackers(Request $request, $id) {
+        if (!$request->ajax()) {
+            return redirect()->route('killmail.show', compact('id'));
+        }
+
+
+    }
 }

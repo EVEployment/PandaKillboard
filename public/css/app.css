@@ -11215,6 +11215,10 @@ legend {
   height: 398px;
   width: 398px;
   z-index: 3;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .fitting-panel .mask {
@@ -11540,9 +11544,13 @@ legend {
   overflow-y: auto;
 }
 
+h5.tbl-title {
+  font-size: 1rem;
+}
+
 body {
   background-color: #060606;
-  background-image: url(/images/wallpapers/into_the_abyss.jpg);
+  background-image: url(/images/backgrounds/zenith-optimized.jpg);
   background-size: cover;
   background-attachment: fixed;
 }
@@ -11603,5 +11611,9 @@ td.pilotinfo {
 .tbl-title {
   font-size: 1.15rem;
   font-weight: 400;
+}
+
+.hide-before-load {
+  display: none;
 }
 

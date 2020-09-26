@@ -1,6 +1,6 @@
-<nav class="navbar navbar-dark navbar-expand-lg bg-dark mb-4">
+<nav class="navbar navbar-dark sticky-top navbar-expand-lg bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/"><img class="d-inline-block" src="{{ asset('/images/wreck.png') }}" style="width: 16px; height: 16px;"> {{ config('app.name') }}</a>
+        <a class="navbar-brand" href="/"><img class="d-inline-block" src="{{ asset('/images/icons/wreck.png') }}" style="width: 16px; height: 16px;"> {{ config('app.name') }}</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>

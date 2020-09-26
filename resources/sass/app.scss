@@ -16,11 +16,11 @@
 
 body {
     background-color: #060606;
-    background-image: url(/images/wallpapers/into_the_abyss.jpg);
+    background-image: url(/images/backgrounds/zenith-optimized.jpg);
     background-size: cover;
     background-attachment: fixed;
 }
- 
+
 .bg-black-transparent {
     background-color: #101010fa;
 }
@@ -65,7 +65,7 @@ td.pilotinfo {
 }
 
 .col-damage {
-    vertical-align: middle !important; 
+    vertical-align: middle !important;
     text-align: right;
 }
 
@@ -77,6 +77,10 @@ td.pilotinfo {
     font-size: 1.15rem;
     font-weight: 400;
     // margin: 0;
+}
+
+.hide-before-load {
+    display: none;
 }
 
 

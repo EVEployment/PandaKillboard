@@ -4,10 +4,9 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-use App\KillmailVictim;
+use App\Models\KillmailVictim;
 
-class FittingPanel extends Component
-{
+class FittingPanel extends Component {
     public $shipType;
     public $items;
     public $highSlotCount = 0;
@@ -20,11 +19,10 @@ class FittingPanel extends Component
      *
      * @return void
      */
-    public function __construct(KillmailVictim $victim)
-    {
+    public function __construct(KillmailVictim $victim) {
         $this->items = $victim->items;
         $this->shipType = $victim->ship_type;
-        $this->parseFit();
+        // $this->parseFit();
     }
 
     /**
@@ -32,16 +30,19 @@ class FittingPanel extends Component
      *
      * @return \Illuminate\View\View|string
      */
-    public function render()
-    {
+    public function render() {
         return view('components.fitting-panel');
+    }
+
+    public function getShipBasicStat() {
+
     }
 
     public function parseFit() {
         foreach ($this->items as $item) {
             if (!is_null($item->container_id)) {
                 // only interpret root fit
-                
+
                 continue;
             }
 
@@ -68,7 +69,5 @@ class FittingPanel extends Component
         foreach ($this->items->whereBetween('flag', ['92, 99']) as $item) {
             // rigs
         }
-
-
     }
 }

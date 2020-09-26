@@ -10,21 +10,21 @@
  */
 
 
-namespace App{
+namespace App\Models{
 /**
- * App\Alliance
+ * App\Models\Alliance
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $name
  * @property string $ticker
- * @property bool $closed
+ * @property \Illuminate\Support\Carbon $date_founded
  * @method static \Illuminate\Database\Eloquent\Builder|Alliance newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Alliance newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Alliance query()
- * @method static \Illuminate\Database\Eloquent\Builder|Alliance whereClosed($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Alliance whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Alliance whereDateFounded($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Alliance whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Alliance whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Alliance whereTicker($value)
@@ -33,9 +33,9 @@ namespace App{
 	class Alliance extends \Eloquent {}
 }
 
-namespace App{
+namespace App\Models{
 /**
- * App\Character
+ * App\Models\Character
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -60,9 +60,9 @@ namespace App{
 	class Character extends \Eloquent {}
 }
 
-namespace App{
+namespace App\Models{
 /**
- * App\Corporation
+ * App\Models\Corporation
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -87,7 +87,7 @@ namespace App{
 	class Corporation extends \Eloquent {}
 }
 
-namespace App{
+namespace App\Models{
 /**
  * Class InvGroup.
  *
@@ -117,7 +117,7 @@ namespace App{
 	class InvGroup extends \Eloquent {}
 }
 
-namespace App{
+namespace App\Models{
 /**
  * Class InvType.
  *
@@ -221,7 +221,7 @@ namespace App{
  * @property int|null $graphicID
  * @property-read \Illuminate\Database\Eloquent\Collection|InvType[] $components
  * @property-read int|null $components_count
- * @property-read \App\InvGroup|null $group
+ * @property-read \App\Models\InvGroup|null $group
  * @property-read \Illuminate\Database\Eloquent\Collection|InvType[] $reactions
  * @property-read int|null $reactions_count
  * @method static \Illuminate\Database\Eloquent\Builder|InvType newModelQuery()
@@ -246,9 +246,9 @@ namespace App{
 	class InvType extends \Eloquent {}
 }
 
-namespace App{
+namespace App\Models{
 /**
- * App\Killmail
+ * App\Models\Killmail
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -262,12 +262,12 @@ namespace App{
  * @property float $position_y
  * @property float $position_z
  * @property int $nearest_celestial_id
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\KillmailAttacker[] $attacker
- * @property-read int|null $attacker_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\KillmailAttacker[] $attackers
+ * @property-read int|null $attackers_count
  * @property-read mixed $link
- * @property-read \App\MapDenormalize $nearest_celestial
- * @property-read \App\MapDenormalize $solar_system
- * @property-read \App\KillmailVictim|null $victim
+ * @property-read \App\Models\MapDenormalize $nearest_celestial
+ * @property-read \App\Models\MapDenormalize $solar_system
+ * @property-read \App\Models\KillmailVictim|null $victim
  * @method static \Illuminate\Database\Eloquent\Builder|Killmail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Killmail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Killmail query()
@@ -287,16 +287,16 @@ namespace App{
 	class Killmail extends \Eloquent {}
 }
 
-namespace App{
+namespace App\Models{
 /**
- * App\KillmailAttacker
+ * App\Models\KillmailAttacker
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $killmail_id
  * @property int|null $alliance_id
- * @property \App\Corporation $corporation_id
+ * @property \App\Models\Corporation $corporation_id
  * @property int|null $character_id
  * @property int $damage_done
  * @property int|null $faction_id
@@ -304,11 +304,11 @@ namespace App{
  * @property string $security_status
  * @property int|null $ship_type_id
  * @property int|null $weapon_type_id
- * @property-read \App\Alliance|null $alliance
- * @property-read \App\Character|null $character
- * @property-read \App\Killmail $killmail
- * @property-read \App\InvType|null $ship_type
- * @property-read \App\InvType|null $weapon_type
+ * @property-read \App\Models\Alliance|null $alliance
+ * @property-read \App\Models\Character|null $character
+ * @property-read \App\Models\Killmail $killmail
+ * @property-read \App\Models\InvType|null $ship_type
+ * @property-read \App\Models\InvType|null $weapon_type
  * @method static \Illuminate\Database\Eloquent\Builder|KillmailAttacker newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|KillmailAttacker newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|KillmailAttacker query()
@@ -329,9 +329,9 @@ namespace App{
 	class KillmailAttacker extends \Eloquent {}
 }
 
-namespace App{
+namespace App\Models{
 /**
- * App\KillmailItem
+ * App\Models\KillmailItem
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -340,14 +340,14 @@ namespace App{
  * @property int|null $container_id
  * @property int $flag
  * @property int $item_type_id
- * @property int $quantity_destroyed
- * @property int $quantity_dropped
+ * @property int|null $quantity_destroyed
+ * @property int|null $quantity_dropped
  * @property int $singleton
  * @property-read KillmailItem|null $container
- * @property-read \App\InvType $item_type
+ * @property-read \App\Models\InvType $item_type
  * @property-read \Illuminate\Database\Eloquent\Collection|KillmailItem[] $items
  * @property-read int|null $items_count
- * @property-read \App\KillmailVictim $killmail_victim
+ * @property-read \App\Models\KillmailVictim $killmail_victim
  * @method static \Illuminate\Database\Eloquent\Builder|KillmailItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|KillmailItem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|KillmailItem query()
@@ -365,24 +365,27 @@ namespace App{
 	class KillmailItem extends \Eloquent {}
 }
 
-namespace App{
+namespace App\Models{
 /**
- * App\KillmailVictim
+ * App\Models\KillmailVictim
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $killmail_id
  * @property int|null $alliance_id
- * @property \App\Corporation $corporation_id
+ * @property int|null $corporation_id
  * @property int|null $character_id
  * @property int $damage_taken
- * @property int $faction_id
+ * @property int|null $faction_id
  * @property int $ship_type_id
- * @property-read \App\Alliance|null $alliance
- * @property-read \App\Character|null $character
- * @property-read \App\Killmail $killmail
- * @property-read \App\InvType $ship_type
+ * @property-read \App\Models\Alliance|null $alliance
+ * @property-read \App\Models\Character|null $character
+ * @property-read \App\Models\Corporation|null $corporation
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\KillmailItem[] $items
+ * @property-read int|null $items_count
+ * @property-read \App\Models\Killmail $killmail
+ * @property-read \App\Models\InvType $ship_type
  * @method static \Illuminate\Database\Eloquent\Builder|KillmailVictim newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|KillmailVictim newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|KillmailVictim query()
@@ -400,7 +403,7 @@ namespace App{
 	class KillmailVictim extends \Eloquent {}
 }
 
-namespace App{
+namespace App\Models{
 /**
  * Class MapDenormalize.
  *
@@ -508,7 +511,7 @@ namespace App{
  * @property-read int $structure_id
  * @property-read MapDenormalize|null $region
  * @property-read MapDenormalize|null $system
- * @property-read \App\InvType|null $type
+ * @property-read \App\Models\InvType|null $type
  * @method static \Illuminate\Database\Eloquent\Builder|MapDenormalize constellations()
  * @method static \Illuminate\Database\Eloquent\Builder|MapDenormalize moons()
  * @method static \Illuminate\Database\Eloquent\Builder|MapDenormalize newModelQuery()
@@ -536,9 +539,9 @@ namespace App{
 	class MapDenormalize extends \Eloquent {}
 }
 
-namespace App{
+namespace App\Models{
 /**
- * App\RefreshToken
+ * App\Models\RefreshToken
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -563,9 +566,9 @@ namespace App{
 	class RefreshToken extends \Eloquent {}
 }
 
-namespace App{
+namespace App\Models{
 /**
- * App\User
+ * App\Models\User
  *
  * @property int $id
  * @property string $name

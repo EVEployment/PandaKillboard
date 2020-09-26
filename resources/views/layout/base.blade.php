@@ -20,7 +20,7 @@
 
 <body>
     <x-navbar />
-    <div class="container" id="content">
+    <div class="container mt-3" id="content">
 
         @yield('content')
     </div>

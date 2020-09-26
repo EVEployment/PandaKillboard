@@ -1,36 +1,38 @@
 
-@props(['attackers'])
+@props(['attackers', 'totalDamage'])
 
 <div id="details">
+    <h4 class="tbl-title">Involved Parties ({{ $attackers->count() }})</h4>
     <div class="mb-2">
-        <div class="final-blow special-attacker mb-2">
-            <h4 class="tbl-title">Final Blow</h4>
+        <div class="final-blow special-attacker mb-3">
+            <h5 class="tbl-title">Final Blow</h5>
             <x-single.killmail-attacker-table>
-                <x-single.killmail-attacker-row />
+                <x-single.killmail-attacker-row :attacker="$attackers->firstWhere('final_blow', true)" :totalDamage="$totalDamage" />
             </x-single.killmail-attacker-table>
         </div>
 
         <div class="top-damage special-attacker">
-            <h4 class="tbl-title">Top Damage</h4>
+            <h5 class="tbl-title">Top Damage</h5>
             <x-single.killmail-attacker-table>
-                <x-single.killmail-attacker-row />
+                <x-single.killmail-attacker-row :attacker="$attackers->sortByDesc('damage_done')->first()" :totalDamage="$totalDamage" />
             </x-single.killmail-attacker-table>
         </div>
     </div>
-    <hr>
-    <div>
-        <div class="all-attackers">
-            <h4 class="tbl-title">%d Involved</h4>
-            <div class="table-scroll" style="max-height: 450px;">
-                <x-single.killmail-attacker-table>
-                    @for ($i = 0; $i < 50; $i++)
-                    <x-single.killmail-attacker-row />
-                    @endfor
-                </x-single.killmail-attacker-table>
+    @if ($attackers->where('final_blow', false)->count() > 1)
+        <hr>
+        <div>
+            <div class="all-attackers hide-before-load">
+                <div class="table-scroll" style="max-height: 450px;">
+                    <x-single.killmail-attacker-table>
+                        @foreach ($attackers->where('final_blow', false)->sortByDesc('damage_done')->skip(1)->take(256) as $attacker)
+                            <x-single.killmail-attacker-row :attacker="$attacker" :totalDamage="$totalDamage" />
+                        @endforeach
+                    </x-single.killmail-attacker-table>
+                </div>
             </div>
         </div>
-    </div>
-    <div style="margin: 0px;">
+    @endif
+    {{-- <div style="margin: 0px;">
         <div class="accordion well well-small" id="invAll">
             <div class="accordion-group">
                 <div class="accordion-heading">
@@ -948,6 +950,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 </div>

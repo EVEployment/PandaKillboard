@@ -12,8 +12,8 @@ class Corporation extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'name', 'ticker', 'closed', 'npc',
-        'alliance_id',
+        'id', 'name', 'ticker',
+        'alliance_id', 'member_count',
     ];
 
     /**
@@ -21,13 +21,4 @@ class Corporation extends Model
      */
     public $incrementing = false;
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'closed' => 'bool',
-        'npc'    => 'bool',
-    ];
 }

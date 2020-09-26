@@ -7,22 +7,22 @@
                 <td style="width: 66px; padding: 0px;">
                     @if (!is_null($killmail->victim->character_id))
                         <a href="/character/93694437/" rel="tooltip">
-                            <img src="{{ img_url('characters', 'portrait', $killmail->victim->character_id, 64) }}" style="height: 64px; width: 64px;" class="eveimage img-rounded" alt="{{ $killmail->victim->character_id }}">
+                            <img src="{{ img_url('characters', 'portrait', $killmail->victim->character_id, 128) }}" style="height: 64px; width: 64px;" class="eveimage img-rounded" alt="{{ $killmail->victim->character_id }}">
                         </a>
                     @else
-                        <img src="{{ img_url('characters', 'portrait', 1, 64) }}" style="height: 64px; width: 64px;" class="eveimage img-rounded" alt="default">
+                        <img src="{{ img_url('characters', 'portrait', 1, 128) }}" style="height: 64px; width: 64px;" class="eveimage img-rounded" alt="default">
                     @endif
                 </td>
                 <td style="width: 34px; padding: 0px;">
                     @if (!is_null($killmail->victim->corporation_id))
                         <a href="/corporation/98255033/" rel="tooltip">
-                            <img src="{{ img_url('corporations', 'logo', $killmail->victim->corporation_id, 32) }}" style="height: 32px; width: 32px;" class="eveimage img-rounded" alt="{{ $killmail->victim->corporation_id }}">
+                            <img src="{{ img_url('corporations', 'logo', $killmail->victim->corporation_id, 64) }}" style="height: 32px; width: 32px;" class="eveimage img-rounded" alt="{{ $killmail->victim->corporation_id }}">
                         </a>
                     @endif
                     <br>
                     @if (!is_null($killmail->victim->alliance_id))
                         <a href="/corporation/98255033/" rel="tooltip">
-                            <img src="{{ img_url('alliances', 'logo', $killmail->victim->alliance_id, 32) }}" style="height: 32px; width: 32px;" class="eveimage img-rounded" alt="{{ $killmail->victim->alliance_id }}">
+                            <img src="{{ img_url('alliances', 'logo', $killmail->victim->alliance_id, 64) }}" style="height: 32px; width: 32px;" class="eveimage img-rounded" alt="{{ $killmail->victim->alliance_id }}">
                         </a>
                     @endif
                 </td>
@@ -46,7 +46,7 @@
         <tbody>
             <tr>
                 <th>Ship:</th>
-                <td style="width: 100%"> 
+                <td style="width: 100%">
                     <a href="/ship/20185/">{{ $killmail->victim->ship_type->typeName }}</a>
                     <small>( <a href="/group/513/">{{ $killmail->victim->ship_type->group->groupName }}</a> )</small>
                 </td>
@@ -56,7 +56,7 @@
                 <th>System:</th>
                 <td>
                     <a href="/system/30000144/" class="">{{ $killmail->solar_system->itemName }} </a>
-                    <span>(<span style="color: #33F9F9">{{ round($killmail->solar_system->security, 1) }}</span>)</span> / <a href="/region/10000002/" class="">{{ $killmail->solar_system->region->itemName }}</a>
+                    <span>(<span style="color: #33F9F9">{{ number_format($killmail->solar_system->security, 1) }}</span>)</span> / <a href="/region/10000002/" class="">{{ $killmail->solar_system->region->itemName }}</a>
 
                 </td>
             </tr>

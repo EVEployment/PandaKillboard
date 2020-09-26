@@ -20,7 +20,8 @@ class CreateCharactersTable extends Migration
             $table->foreignId('corporation_id');
             $table->foreignId('alliance_id')->nullable();
             $table->foreignId('faction_id')->nullable();
-            $table->boolean('npc')->default(false);
+            $table->dateTime('birthday');
+            $table->float('security_status')->default(0);
         });
     }
 

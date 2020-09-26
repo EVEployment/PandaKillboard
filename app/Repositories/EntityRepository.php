@@ -62,13 +62,70 @@ class EntityRepository {
         return null;
     }
 
+    public function resolve(int $id) {
+        $type = $this->getTypeByID($id);
+        switch ($type) {
+            case 'faction':
+            case 'npc_corporation':
+            case 'npc_character':
+                return null;
+            case 'character':
+                return Character::find($id);
+            case 'corporation':
+                return Corporation::find($id);
+            case 'alliance':
+                return Alliance::find($id);
+            default:
+                return null;
+        }
+    }
+
+    public function isEntityNeedUpdate(int $id) {
+        $type = $this->getTypeByID($id);
+        switch ($type) {
+            case 'alliance': // 3600s
+                return !Alliance::whereId($id)->where('updated_at', '>', now()->subHour())->exists();
+            case 'corporation': // 3600s
+                return !Corporation::whereId($id)->where('updated_at', '>', now()->subHour())->exists();
+            case 'character': // 86400s
+                return !Character::whereId($id)->where('updated_at', '>', now()->subDay())->exists();
+            default:
+                return false;
+        }
+    }
+
     public function updateAlliance($alliance_id, $alliance_data) {
-        return Alliance::updateOrInsert([
+        return Alliance::updateOrCreate([
             'id' => $alliance_id,
         ], [
             'name' => $alliance_data->name,
             'ticker' => $alliance_data->ticker,
             'date_founded' => $alliance_data->date_founded,
+        ]);
+    }
+
+    public function updateCorporation($corporation_id, $corporation_data) {
+        return Corporation::updateOrCreate([
+            'id' => $corporation_id,
+        ], [
+            'name' => $corporation_data->name,
+            'ticker' => $corporation_data->ticker,
+            'ceo_id' => $corporation_data->ceo_id,
+            'member_count' => $corporation_data->member_count,
+            'alliance_id' => $corporation_data->alliance_id ?? null,
+        ]);
+    }
+
+    public function updateCharacter($character_id, $character_data) {
+        return Character::updateOrCreate([
+            'id' => $character_id,
+        ], [
+            'name' => $character_data->name,
+            'corporation_id' => $character_data->corporation_id,
+            'alliance_id' => $character_data->alliance_id ?? null,
+            'faction_id' => $character_data->faction_id ?? null,
+            'birthday' => $character_data->birthday,
+            'security_status' => $character_data->security_status,
         ]);
     }
 }

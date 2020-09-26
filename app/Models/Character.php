@@ -13,7 +13,7 @@ class Character extends Model
      */
     protected $fillable = [
         'id', 'name', 'corporation_id', 'alliance_id',
-        'faction_id', 'npc',
+        'faction_id', 'birthday', 'security_status',
     ];
 
     /**
@@ -27,6 +27,6 @@ class Character extends Model
      * @var array
      */
     protected $casts = [
-        'npc'    => 'bool',
+        'birthday'    => 'datetime',
     ];
 }

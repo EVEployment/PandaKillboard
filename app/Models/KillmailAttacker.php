@@ -25,7 +25,7 @@ class KillmailAttacker extends Model
         return $this->belongsTo(Alliance::class);
     }
 
-    public function corporation_id() {
+    public function corporation() {
         return $this->belongsTo(Corporation::class);
     }
 

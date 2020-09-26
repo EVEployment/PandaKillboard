@@ -22,6 +22,8 @@
 
 namespace App;
 
+use App\Models\MapDenormalize;
+
 /**
  * Class Utils.
  * @package Seat\Eveapi\Traits

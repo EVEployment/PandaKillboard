@@ -18,9 +18,9 @@ class CreateCorporationsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('ticker');
-            $table->boolean('closed');
-            $table->boolean('npc');
             $table->foreignId('alliance_id')->nullable();
+            $table->foreignId('ceo_id');
+            $table->integer('member_count');
         });
     }
 

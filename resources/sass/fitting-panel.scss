@@ -6,17 +6,18 @@
 
 .fitting-panel {
     margin: auto;
-    position: relative; 
-    height:398px; 
-    width:398px; 
+    position: relative;
+    height:398px;
+    width:398px;
     z-index: 3;
+    user-select: none;
 
     .mask {
-        position: absolute; 
-        left: 0px; 
-        top: 0px; 
-        width: 398px; 
-        height: 398px; 
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 398px;
+        height: 398px;
         z-index: -1;
     }
 
@@ -25,28 +26,28 @@
     }
 
     .item-lg {
-        position: absolute; 
-        width: 32px; 
+        position: absolute;
+        width: 32px;
         height: 32px;
     }
 
     .item-sm {
-        position: absolute; 
-        width: 24px; 
+        position: absolute;
+        width: 24px;
         height: 24px;
     }
 
     .ship-image {
-        position: absolute; 
-        left: 72px; 
-        top: 71px; 
-        width: 256px; 
-        height: 256px; 
+        position: absolute;
+        left: 72px;
+        top: 71px;
+        width: 256px;
+        height: 256px;
         z-index: -2;
 
         img {
-            width: 256px; 
-            height: 256px; 
+            width: 256px;
+            height: 256px;
         }
     }
 

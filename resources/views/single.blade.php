@@ -39,12 +39,12 @@
                         </div>
 
                         <div class="col-lg">
-                            <x-single.fitting-panel :shipTypeID="$killmail->victim->ship_type_id" :items="$killmail->victim->items" />
+                            <x-fitting-panel :victim="$killmail->victim" />
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-4 order-xl-1">
-                    <x-single.killmail-attackers :attackers="$killmail->attackers" />
+                    <x-single.killmail-attackers :attackers="$killmail->attackers" :totalDamage="$killmail->victim->damage_taken" />
                 </div>
             </div>
         </div>

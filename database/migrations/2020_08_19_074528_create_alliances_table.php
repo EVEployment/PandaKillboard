@@ -17,8 +17,8 @@ class CreateAlliancesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('ticker');
-            $table->boolean('closed');
+            $table->string('ticker')->index();
+            $table->dateTime('date_founded');
         });
     }
 

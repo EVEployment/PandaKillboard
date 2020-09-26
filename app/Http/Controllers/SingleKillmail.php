@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Killmail as KillmailRepo;
+use App\Repositories\KillmailRepository as KillmailRepo;
 
 class SingleKillmail extends Controller
 {

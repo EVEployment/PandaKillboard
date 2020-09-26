@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +13,7 @@ class Killmail extends Model
      */
     protected $fillable = [
         'id', 'hash', 'time', 'moon_id',
-        'solar_system_id', 'war_id', 'position_x', 
+        'solar_system_id', 'war_id', 'position_x',
         'position_y', 'position_z', 'nearest_celestial_id'
     ];
 

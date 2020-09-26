@@ -1,18 +1,21 @@
 <?php
 
+$esi = parse_url(env('EVEONLINE_ESI_ROOT', 'https://esi.evetech.net'));
+$sso = parse_url(env('EVEONLINE_SSO_ROOT', 'https://login.eveonline.com'));
+
 return [
-    'http_user_agent'            => 'Eseye Default Library',
+    'http_user_agent'            => env('EVEONLINE_ESI_USER_AGENT', 'Eseye'),
 
     // Esi
-    'datasource'                 => env('ESI_TENANT', 'tranquility'),
-    'esi_scheme'                 => 'https',
-    'esi_host'                   => 'esi.evetech.net',
-    'esi_port'                   => 443,
+    'datasource'                 => env('EVEONLINE_ESI_TENANT', 'tranquility'),
+    'esi_scheme'                 => $esi['scheme'] ?? 'https',
+    'esi_host'                   => $esi['host'] ?? 'esi.evetech.net',
+    'esi_port'                   => $esi['port'] ?? 443,
 
     // Eve Online SSO
-    'sso_scheme'                 => 'https',
-    'sso_host'                   => 'login.eveonline.com',
-    'sso_port'                   => 443,
+    'sso_scheme'                 => $sso['scheme'] ?? 'https',
+    'sso_host'                   => $sso['host'] ?? 'login.eveonline.com',
+    'sso_port'                   => $sso['port'] ?? 443,
 
     // Fetcher
     'fetcher'                    => \Seat\Eseye\Fetchers\GuzzleFetcher::class,

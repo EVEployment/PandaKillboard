@@ -19,4 +19,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'index');
 
-Route::get('/kill/{id}', 'SingleKillmail@get');
+Route::get('/kill/{id}', [App\Http\Controllers\SingleKillmail::class, 'get']);

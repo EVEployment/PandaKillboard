@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Alliance extends Model
+class Corporation extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,8 @@ class Alliance extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'name', 'ticker', 'closed', 
+        'id', 'name', 'ticker', 'closed', 'npc',
+        'alliance_id',
     ];
 
     /**
@@ -27,5 +28,6 @@ class Alliance extends Model
      */
     protected $casts = [
         'closed' => 'bool',
+        'npc'    => 'bool',
     ];
 }

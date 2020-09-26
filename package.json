@@ -15,7 +15,7 @@
     "bootswatch": "^4.5.2",
     "cross-env": "^7.0",
     "jquery": "^3.2",
-    "laravel-mix": "^5.0.1",
+    "laravel-mix": "^5.0.5",
     "lodash": "^4.17.19",
     "popper.js": "^1.12",
     "resolve-url-loader": "^3.1.0",
@@ -25,7 +25,10 @@
   },
   "files": [
     "/public/js",
-    "/public/css"
+    "/public/css",
+    "/resources/js",
+    "/resources/sass",
+    "/resources/lang"
   ],
   "name": "@winterco/pandakillboard",
   "description": "EVE Online Killboard",

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +13,7 @@ class KillmailItem extends Model
      */
     protected $fillable = [
         'killmail_victim_id', 'container_id', 'flag', 'item_type_id',
-        'quantity_destroyed', 'quantity_dropped', 'singleton', 
+        'quantity_destroyed', 'quantity_dropped', 'singleton',
     ];
 
     public function killmail_victim() {

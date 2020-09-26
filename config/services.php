@@ -31,13 +31,15 @@ return [
     ],
 
     'eveonline' => [
-        'root' => env('ESI_ROOT', 'https://esi.evetech.net'),
-        'client_id' => env('ESI_CLIENT_ID', null),
-        'client_secret' => env('ESI_CLIENT_SECRET', null),
-        'callback_url' => env('ESI_CALLBACK_URL', null),
-        'tenant' => env('ESI_TENANT', 'tranquility'),
+        'esi_root' => env('EVEONLINE_ESI_ROOT', 'https://esi.evetech.net'),
+        'client_id' => env('EVEONLINE_ESI_CLIENT_ID', null),
+        'client_secret' => env('EVEONLINE_ESI_CLIENT_SECRET', null),
+        'callback_url' => env('EVEONLINE_ESI_CALLBACK_URL', null),
+        'tenant' => env('EVEONLINE_ESI_TENANT', 'tranquility'),
 
-        'image_server' => env('ESI_IMAGE_SERVER', 'https://images.evetech.net'),
+        'sso_root' => env('EVEONLINE_SSO_ROOT', 'https://login.eveonline.com'),
+
+        'image_server' => env('EVEONLINE_ESI_IMAGE_SERVER', 'https://images.evetech.net'),
     ]
 
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +13,6 @@ class RefreshToken extends Model
      */
     protected $fillable = [
         'id', 'refresh_token', 'access_token', 'scopes',
-        'expires_on', 
+        'expires_on',
     ];
 }

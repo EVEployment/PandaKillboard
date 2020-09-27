@@ -8,7 +8,8 @@
 // @import '~bootstrap/scss/bootstrap';
 
 @import "~bootswatch/dist/cyborg/variables";
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
 @import "~bootswatch/dist/cyborg/bootswatch";
 
 @import "./fitting-panel.scss";

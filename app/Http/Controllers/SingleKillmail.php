@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use App\Repositories\KillmailRepository as KillmailRepo;
 
 class SingleKillmail extends Controller
@@ -15,7 +16,7 @@ class SingleKillmail extends Controller
 
     public function get(Request $request, $id) {
         $killmail = $this->killmailRepo->getSingleKillmail($id);
-        return view('single', [
+        return Inertia::render('Killmail', [
             'killmail' => $killmail,
         ]);
     }

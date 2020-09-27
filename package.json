@@ -13,15 +13,17 @@
     "axios": "^0.19",
     "bootstrap": "^4.0.0",
     "bootswatch": "^4.5.2",
+    "clean-webpack-plugin": "^3.0.0",
     "cross-env": "^7.0",
     "jquery": "^3.2",
     "laravel-mix": "^5.0.5",
+    "laravel-mix-versionhash": "^1.1.6",
     "lodash": "^4.17.19",
     "popper.js": "^1.12",
     "resolve-url-loader": "^3.1.0",
-    "sass": "^1.15.2",
+    "sass": "^1.26.11",
     "sass-loader": "^8.0.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.12"
   },
   "files": [
     "/public/js",
@@ -34,5 +36,17 @@
   "description": "EVE Online Killboard",
   "version": "1.0.0",
   "author": "Winter Coalition",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@inertiajs/inertia": "^0.3.4",
+    "@inertiajs/inertia-vue": "^0.2.4",
+    "bootstrap-vue": "^2.17.3",
+    "graphql": "^15.3.0",
+    "laravel-mix-clean": "^0.1.0",
+    "vue": "^2.6.12",
+    "vue-axios": "^2.1.5",
+    "vue-i18n": "^8.21.1",
+    "vue-modal-dialogs": "^3.0.0",
+    "vue-server-renderer": "^2.6.12"
+  }
 }

@@ -2,11 +2,21 @@
 
 namespace App\Repositories;
 
+use App\EseyeFactory;
+use App\Jobs\GetAlliance;
+use App\Jobs\GetCharacter;
+use App\Jobs\GetCorporation;
 use App\Models\Alliance;
 use App\Models\Corporation;
 use App\Models\Character;
+use App\Models\InvName;
+use App\Models\InvType;
+use Illuminate\Support\Collection;
 
 class EntityRepository {
+
+    public function __construct(private EseyeFactory $eseye) {
+    }
 
     /**
      * Get ID Type By Range Check
@@ -19,9 +29,9 @@ class EntityRepository {
         } else if ($id >= 500000 && $id < 1000000) {
             return 'faction';
         } else if ($id >= 1000000 && $id < 2000000) {
-            return 'npc_corporation';
+            return 'corporation'; // was npc
         } else if ($id >= 3000000 && $id < 4000000) {
-            return 'npc_character';
+            return 'character'; // was npc
         } else if ($id >= 9000000 && $id < 10000000) {
             return 'universe';
         } else if ($id >= 10000000 && $id < 11000000) {
@@ -56,7 +66,14 @@ class EntityRepository {
             return 'corporation';
         } else if ($id >= 99000000 && $id < 100000000) {
             return 'alliance';
-        } else if ($id >= 100000000 && $id < 2147483647) {
+        } else if ($id >= 100000000 && $id < 2100000000) {
+            // CCP go fsck yourself thx
+            if (Alliance::where('id', $id)->exists()) return 'alliance';
+            if (Corporation::where('id', $id)->exists()) return 'corporation';
+            if (Character::where('id', $id)->exists()) return 'character';
+            $id_data = $this->eseye->setVersion('v3')->setBody([$id])->invoke('post', '/universe/names/');
+            return $id_data[0]->category;
+        } else if ($id >= 2100000000 && $id < 2147483647) {
             return 'character';
         }
         return null;
@@ -82,16 +99,12 @@ class EntityRepository {
 
     public function isEntityNeedUpdate(int $id) {
         $type = $this->getTypeByID($id);
-        switch ($type) {
-            case 'alliance': // 3600s
-                return !Alliance::whereId($id)->where('updated_at', '>', now()->subHour())->exists();
-            case 'corporation': // 3600s
-                return !Corporation::whereId($id)->where('updated_at', '>', now()->subHour())->exists();
-            case 'character': // 86400s
-                return !Character::whereId($id)->where('updated_at', '>', now()->subDay())->exists();
-            default:
-                return false;
-        }
+        return match ($type) {
+            'alliance' => !Alliance::whereId($id)->where('updated_at', '>', now()->subHour())->exists(),
+            'corporation' => !Corporation::whereId($id)->where('updated_at', '>', now()->subHour())->exists(),
+            'character' => !Character::whereId($id)->where('updated_at', '>', now()->subDay())->exists(),
+            default => false,
+        };
     }
 
     public function updateAlliance($alliance_id, $alliance_data) {
@@ -127,5 +140,26 @@ class EntityRepository {
             'birthday' => $character_data->birthday,
             'security_status' => $character_data->security_status,
         ]);
+    }
+
+
+    public function job(int $id): GetCharacter|GetCorporation|GetAlliance|null {
+        $type = $this->getTypeByID($id);
+        return match ($type) {
+            'character' => new GetCharacter($id),
+            'corporation' => new GetCorporation($id),
+            'alliance' => new GetAlliance($id),
+            default => null,
+        };
+    }
+
+    public function getNames(Collection $ids): Collection {
+        $characters = Character::whereIn('id', $ids)->pluck('name', 'id');
+        $corporations = Corporation::whereIn('id', $ids)->pluck('name', 'id');
+        $alliances = Alliance::whereIn('id', $ids)->pluck('name', 'id');
+        $types = InvType::whereIn('typeID', $ids)->pluck('typeName', 'typeID');
+        $names = InvName::whereIn('itemID', $ids)->pluck('itemName', 'itemID')->toArray();
+
+        return collect($types)->replace($names)->replace($corporations)->replace($alliances)->replace($characters);
     }
 }

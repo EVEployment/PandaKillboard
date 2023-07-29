@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAlliancesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateAlliancesTable extends Migration
     public function up()
     {
         Schema::create('alliances', function (Blueprint $table) {
-            $table->id();
+            $table->bigInteger('id')->primary();
             $table->timestamps();
             $table->string('name');
             $table->string('ticker')->index();
@@ -31,4 +31,4 @@ class CreateAlliancesTable extends Migration
     {
         Schema::dropIfExists('alliances');
     }
-}
+};

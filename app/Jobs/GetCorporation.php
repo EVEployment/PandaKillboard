@@ -30,9 +30,8 @@ class GetCorporation implements ShouldQueue {
      * @return void
      */
     public function handle(EntityRepository $entity, EseyeFactory $eseye) {
-        if (!$entity->isEntityNeedUpdate($this->alliance_id)) return;
-        $corporation_data = $eseye->setVersion('v4')->invoke('get', '/corporations/{corporation_id}/', ['corporation_id' => $this->corporation_id]);
+        if (!$entity->isEntityNeedUpdate($this->corporation_id)) return;
+        $corporation_data = $eseye->setVersion('v5')->invoke('get', '/corporations/{corporation_id}/', ['corporation_id' => $this->corporation_id]);
         $entity->updateCorporation($this->corporation_id, $corporation_data);
-        return;
     }
 }

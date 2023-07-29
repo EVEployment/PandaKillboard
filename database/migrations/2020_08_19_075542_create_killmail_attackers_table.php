@@ -4,28 +4,28 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKillmailAttackersTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('killmail_attackers', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
             $table->timestamps();
             $table->foreignId('killmail_id')->constrained();
-            $table->integer('alliance_id')->nullable();
-            $table->integer('corporation_id')->nullable();
-            $table->integer('character_id')->nullable();
+            $table->integer('alliance_id')->nullable()->index();
+            $table->integer('corporation_id')->nullable()->index();
+            $table->integer('character_id')->nullable()->index();
             $table->integer('damage_done');
-            $table->integer('faction_id')->nullable();
+            $table->integer('faction_id')->nullable()->index();
             $table->boolean('final_blow')->default(false);
             $table->decimal('security_status', 3, 1);
-            $table->integer('ship_type_id')->nullable();
-            $table->integer('weapon_type_id')->nullable();
+            $table->integer('ship_type_id')->nullable()->index();
+            $table->integer('weapon_type_id')->nullable()->index();
+
+            $table->index('killmail_id');
         });
     }
 
@@ -34,8 +34,7 @@ class CreateKillmailAttackersTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('killmail_attackers');
     }
-}
+};

@@ -29,4 +29,12 @@ class Character extends Model
     protected $casts = [
         'birthday'    => 'datetime',
     ];
+
+    public function corporation() {
+        return $this->belongsTo(Corporation::class);
+    }
+
+    public function alliance() {
+        return $this->belongsTo(Alliance::class);
+    }
 }

@@ -1,0 +1,5 @@
+
+fphp:S103#"KSplit this 144 characters long line (which is greater than 120 authorized).(ЏЭґг8ЩЎыйє0
+I	php:S1172#"-Remove the unused function parameter "$args".(ЏЭґг8ЩЎыйє0
+L	php:S1172#"0Remove the unused function parameter "$context".(ЏЭґг8ЩЎыйє0
+P	php:S1172#"4Remove the unused function parameter "$resolveInfo".(ЏЭґг8ЩЎыйє0

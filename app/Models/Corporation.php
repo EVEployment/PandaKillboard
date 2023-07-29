@@ -12,7 +12,7 @@ class Corporation extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'name', 'ticker',
+        'id', 'name', 'ticker', 'ceo_id',
         'alliance_id', 'member_count',
     ];
 
@@ -21,4 +21,11 @@ class Corporation extends Model
      */
     public $incrementing = false;
 
+    public function alliance() {
+        return $this->belongsTo(Alliance::class);
+    }
+
+    public function ceo() {
+        return $this->belongsTo(Character::class, 'ceo_id');
+    }
 }

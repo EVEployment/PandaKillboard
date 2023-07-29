@@ -13,11 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+ Route::get('/', function () {
+     return view('welcome');
+ });
 
-Route::view('/', 'index');
-
-Route::get('/kill/{id}', [App\Http\Controllers\SingleKillmail::class, 'get'])->name('killmail.show');
-Route::get('/kill/{id}/attackers', [App\Http\Controllers\SingleKillmail::class, 'getAttackers'])->name('killmail.attackers');

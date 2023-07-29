@@ -16,8 +16,11 @@ class EseyeServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(EseyeFactory::class, function ($app) {
-            return new EseyeFactory;
+            return EseyeFactory::instance();
         });
+
+        $this->app->alias(EseyeFactory::class, 'eseye');
+        $this->app->alias(EseyeFactory::class, 'eseye');
     }
 
     /**
@@ -33,7 +36,5 @@ class EseyeServiceProvider extends ServiceProvider
         foreach ($configData as $configKey => $configValue) {
             $configuration->{$configKey} = $configValue;
         }
-
-        
     }
 }

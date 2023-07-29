@@ -14,15 +14,19 @@ class CreateKillmailItemsTable extends Migration
     public function up()
     {
         Schema::create('killmail_items', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
             $table->timestamps();
-            $table->foreignId('killmail_victim_id')->constrained();
-            $table->foreignId('container_id')->nullable();
+            $table->date('date'); // used to calculate price
+            $table->foreignId('killmail_id')->constrained();
+            $table->ulid('container_id')->nullable();
             $table->integer('flag');
             $table->integer('item_type_id');
             $table->bigInteger('quantity_destroyed')->nullable();
             $table->bigInteger('quantity_dropped')->nullable();
             $table->integer('singleton');
+
+            $table->index('killmail_id');
+            $table->index('container_id');
         });
     }
 

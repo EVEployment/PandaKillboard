@@ -34,6 +34,5 @@ class GetAlliance implements ShouldQueue
         if (!$entity->isEntityNeedUpdate($this->alliance_id)) return;
         $alliance_data = $eseye->setVersion('v4')->invoke('get', '/alliances/{alliance_id}/', ['alliance_id' => $this->alliance_id]);
         $entity->updateAlliance($this->alliance_id, $alliance_data);
-        return;
     }
 }

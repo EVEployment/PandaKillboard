@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Jobs\Middleware\EsiErrorLimit;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -42,6 +43,15 @@ class FetchKillmail implements ShouldQueue {
         ]);
 
         $killmail->writeKillmail($this->kill_id, $this->kill_hash, $killmail_data);
-        return;
+    }
+
+    /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array
+     */
+    public function middleware()
+    {
+        return [new EsiErrorLimit];
     }
 }

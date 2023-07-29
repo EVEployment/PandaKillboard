@@ -1,0 +1,202 @@
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Query {
+    stats: Statistics
+
+    killmail(id: Int! @eq): Killmail @find
+    killmail_count: Int! @count(model: "Killmail")
+    alliance(id: Int! @eq): Alliance @find
+    alliance_count: Int! @count(model: "Alliance")
+    corporation(id: Int! @eq): Corporation @find
+    corporation_count: Int! @count(model: "Corporation")
+    character(id: Int! @eq): Character @find
+    character_count: Int! @count(model: "Character")
+
+    consecutive_killmails(
+        filter: _ @whereConditions(columnsEnum: "KillmailFilterableColumns", handler: "App\\GraphQL\\KillmailFilterHandler"),
+        orderBy: _! = [{column: ID, order: DESC}] @orderBy(columnsEnum: "KillmailSortableColumns"),
+    ): [Killmail!]! @paginate
+}
+
+enum KillmailFilterableColumns {
+    ID @enum(value: "id")
+    POINTS @enum(value: "points")
+    CREATED_AT @enum(value: "created_at")
+    KILLMAIL_TIME @enum(value: "killmail_time")
+    WAR_ID @enum(value: "war_id")
+    SOLAR_SYSTEM_ID @enum(value: "solar_system_id")
+
+    VICTIM_ALLIANCE_ID @enum(value: "victim->alliance_id")
+    VICTIM_CORPORATION_ID @enum(value: "victim->corporation_id")
+    VICTIM_CHARACTER_ID @enum(value: "victim->character_id")
+    VICTIM_FACTION_ID @enum(value: "victim->faction_id")
+    VICTIM_SHIP_TYPE_ID @enum(value: "victim->ship_type_id")
+    VICTIM_ITEM_TYPE_ID @enum(value: "victim->items->type_id")
+
+    ATTACKER_ALLIANCE_ID @enum(value: "attackers->alliance_id")
+    ATTACKER_CORPORATION_ID @enum(value: "attackers->corporation_id")
+    ATTACKER_CHARACTER_ID @enum(value: "attackers->character_id")
+    ATTACKER_FACTION_ID @enum(value: "attackers->faction_id")
+    ATTACKER_SECURITY_STATUS @enum(value: "attackers->security_status")
+    ATTACKER_SHIP_TYPE_ID @enum(value: "attackers->ship_type_id")
+    ATTACKER_WEAPON_TYPE_ID @enum(value: "attackers->weapon_type_id")
+    ATTACKER_FINAL_BLOW @enum(value: "attackers->final_blow")
+
+    POSITION_X @enum(value: "victim->position->x")
+    POSITION_Y @enum(value: "victim->position->y")
+    POSITION_Z @enum(value: "victim->position->z")
+}
+
+enum KillmailSortableColumns {
+    ID @enum(value: "id")
+    POINTS @enum(value: "points")
+    PRICE_SHIPFIT @enum(value: "aggregated_shipfit")
+    PRICE_DROPPED @enum(value: "aggregated_dropped")
+    PRICE_DESTROYED @enum(value: "aggregated_destroyed")
+    PRICE_ALL @enum(value: "aggregated_value")
+}
+
+type Statistics {
+    top_killmail_id: Int @method(name: "topKillmailId")
+    total_kills: Int @method(name: "totalKills")
+    kills_parsed_last_hour: Int @method(name: "killsParsedLastHour")
+}
+
+type Killmail {
+    id: Int!
+    hash: String!
+    victim: Victim! @preserveDate
+    attackers_count: Int! @method(name: "attackersCount")
+    attackers(final_blow: Boolean): [Attacker!] @filterable
+    killmail_time: DateTime!
+    moon_id: Int
+    solar_system_id: Int!
+    war_id: Int
+    created_at: DateTime
+    updated_at: DateTime
+
+    solar_system: MapItem @jsonBelongsTo(model: "mapDenormalize")
+}
+
+type Victim {
+    character_id: Int
+    corporation_id: Int
+    alliance_id: Int
+    damage_taken: Int!
+    faction_id: Int
+    ship_type_id: Int!
+    position: Position
+    items: [Item!] @preserveDate
+
+    character: Character @jsonBelongsTo(model: "Character")
+    corporation: Corporation @jsonBelongsTo(model: "Corporation")
+    alliance: Alliance @jsonBelongsTo(model: "Alliance")
+    ship_type: InvType! @jsonBelongsTo(model: "InvType")
+    ship_price: Price @fetchPrice(field: "ship_type_id")
+}
+
+type Position {
+    x: Float!
+    y: Float!
+    z: Float!
+}
+
+type Item {
+    flag: Int!
+    item_type_id: Int!
+    items: Item @preserveDate
+    quantity_destroyed: Int
+    quantity_dropped: Int
+    singleton: Int!
+
+    item_type: InvType! @jsonBelongsTo(model: "InvType")
+    price: Price @fetchPrice(field: "item_type_id")
+}
+
+type Attacker {
+    alliance_id: Int
+    character_id: Int
+    corporation_id: Int
+    damage_done: Int!
+    faction_id: Int
+    final_blow: Boolean!
+    security_status: Float!
+    ship_type_id: Int
+    weapon_type_id: Int
+
+    character: Character @jsonBelongsTo(model: "Character")
+    corporation: Corporation @jsonBelongsTo(model: "Corporation")
+    alliance: Alliance @jsonBelongsTo(model: "Alliance")
+    ship_type: InvType @jsonBelongsTo(model: "InvType")
+    weapon_type: InvType @jsonBelongsTo(model: "InvType")
+    ship_price: Price @fetchPrice(field: "ship_type_id")
+    weapon_price: Price @fetchPrice(field: "weapon_type_id")
+}
+
+type Alliance {
+    id: Int!
+    name: String!
+    ticker: String!
+    date_founded: DateTime!
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+type Corporation {
+    id: Int!
+    name: String!
+    ticker: String!
+    alliance_id: Int
+    ceo_id: Int!
+    member_count: Int!
+    created_at: DateTime
+    updated_at: DateTime
+
+    alliance: Alliance @belongsTo
+    ceo: Character @belongsTo
+}
+
+type Character {
+    id: ID!
+    name: String!
+    corporation_id: Int!
+    alliance_id: Int
+    faction_id: Int
+    birthday: DateTime!
+    security_status: Float!
+    created_at: DateTime
+    updated_at: DateTime
+
+    corporation: Corporation @belongsTo
+    alliance: Alliance @belongsTo
+}
+
+type InvType {
+    id: Int! @rename(attribute: "typeID")
+    name: String! @rename(attribute: "typeName")
+    description: String
+}
+
+type MapItem {
+    id: Int! @rename(attribute: "itemID")
+    name: String! @rename(attribute: "itemName")
+    description: String
+    security: Float
+
+    constellation_id: Int @rename(attribute: "constellationID")
+    region_id: Int @rename(attribute: "regionID")
+
+    constellation: MapItem @belongsTo
+    region: MapItem @belongsTo
+}
+
+type Price {
+    type_id: Int!
+    date: Date!
+    adjusted_price: Float!
+    average_price: Float!
+}
+

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKillmailVictimsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -14,15 +14,14 @@ class CreateKillmailVictimsTable extends Migration
     public function up()
     {
         Schema::create('killmail_victims', function (Blueprint $table) {
-            $table->id();
+            $table->foreignId('id')->primary()->constrained('killmails');
             $table->timestamps();
-            $table->foreignId('killmail_id')->constrained();
-            $table->integer('alliance_id')->nullable();
-            $table->integer('corporation_id')->nullable();
-            $table->integer('character_id')->nullable();
+            $table->integer('alliance_id')->nullable()->index();
+            $table->integer('corporation_id')->nullable()->index();
+            $table->integer('character_id')->nullable()->index();
             $table->integer('damage_taken');
             $table->integer('faction_id')->nullable();
-            $table->integer('ship_type_id');
+            $table->integer('ship_type_id')->index();
         });
     }
 
@@ -35,4 +34,4 @@ class CreateKillmailVictimsTable extends Migration
     {
         Schema::dropIfExists('killmail_victims');
     }
-}
+};

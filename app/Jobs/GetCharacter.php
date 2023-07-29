@@ -31,8 +31,7 @@ class GetCharacter implements ShouldQueue {
      */
     public function handle(EntityRepository $entity, EseyeFactory $eseye) {
         if (!$entity->isEntityNeedUpdate($this->character_id)) return;
-        $character_data = $eseye->setVersion('v4')->invoke('get', '/characters/{character_id}/', ['character_idcharacter_id' => $this->character_id]);
+        $character_data = $eseye->setVersion('v5')->invoke('get', '/characters/{character_id}/', ['character_id' => $this->character_id]);
         $entity->updateCharacter($this->character_id, $character_data);
-        return;
     }
 }

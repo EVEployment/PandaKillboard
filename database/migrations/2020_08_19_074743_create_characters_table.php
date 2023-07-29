@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCharactersTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,14 @@ class CreateCharactersTable extends Migration
     public function up()
     {
         Schema::create('characters', function (Blueprint $table) {
-            $table->id();
+            $table->bigInteger('id')->primary();
             $table->timestamps();
             $table->string('name');
             $table->foreignId('corporation_id');
             $table->foreignId('alliance_id')->nullable();
             $table->foreignId('faction_id')->nullable();
             $table->dateTime('birthday');
-            $table->float('security_status')->default(0);
+            $table->double('security_status')->default(0);
         });
     }
 
@@ -34,4 +34,4 @@ class CreateCharactersTable extends Migration
     {
         Schema::dropIfExists('characters');
     }
-}
+};

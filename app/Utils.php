@@ -41,7 +41,7 @@ class Utils {
      *
      * @return int
      */
-    public static function findNearestCelestial(int $solar_system_id, float $x, float $y, float $z): int {
+    public static function findNearestCelestial(int $solar_system_id, float $x, float $y, float $z): array {
 
         // Querying mapDenormalized with [1] we can see
         // the available different group types in the
@@ -103,6 +103,6 @@ class Utils {
             }
         }
 
-        return $response;
+        return [$response,$closest_distance];
     }
 }
